@@ -33,14 +33,18 @@ This repository is intended to be an introduction to digital signal processing c
 
 
 
+### Technical Requirements
+
+All programs are written and tested in Python 3.10.12 on Ubuntu 22.04. The list of required packages is provided as a `requirements.txt`. It's advised to create a separate virtual environment to test the code.
+
+Although `playsound` package, used to play wave files, has no dependencies, but it performs better with `pygobject` that depends on: `libcairo2-dev`, `libgirepository1.0-dev`.
+
 ### Documentation
 
 Some useful documentation on core concepts and programming patterns is also included in markdown docs:
 
 -  [DSP Notes](notes.md)
 - [Program Pattern Specs](code-specs.md)
-
-
 
 ### Directories
 

@@ -1,0 +1,7 @@
+numpy
+scipy
+matplotlib
+soundfile
+playsound
+pillow
+PyGObject
