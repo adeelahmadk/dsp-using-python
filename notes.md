@@ -6,7 +6,7 @@
 
 A general difference equation represents the response of an LTI system to excitation:
 $$
-y(n) = \sum_{k=0}^{M} b_k.x(n-k) - \sum_{k=1}^{N}a_k.y(n-k)
+`y(n) = \sum_{k=0}^{M} b_k.x(n-k) - \sum_{k=1}^{N}a_k.y(n-k)`
 $$
 If all terms with coefficients $a_k$ are zero, the system will be FIR, otherwise it’s called IIR. Therefore, FIR is a Feed-Forward system and it has zeros. All its poles lie on zero. Whereas, IIR filter has both poles and zeros.
 
@@ -324,7 +324,6 @@ We use optimized Park-McLellan algorithm for the FIR filter design having equiri
       \alpha = (N-1)/2
     \end{array}
     $$
-    
     
 - If only the second equation is satisfied, the filter will have only one fix group delay and the impulse response of the filter will have negative symmetry:
     $$
