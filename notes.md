@@ -117,8 +117,10 @@ A first degree FIR BSF can be designed by replacing $`cos`$ with $`sin`$ in BPF 
 
 
 ```math
+\begin{aligned}
 H(z) &= z^{-N} \\
 H(e^{j \omega}) &= 1, \forall \; \omega
+\end{aligned}
 ```
 
 #### Example
@@ -188,8 +190,10 @@ Taking $`\alpha = 0.9`$:
 
 In addition to the fractional form of the FIR filter, it has zeros in the left-half near unit circle:
 ```math
-H(z) &= \frac{1 - \alpha}{2} \; \frac{1 - z^{-1}}{1 + \alpha z^{-1}} \\
-H(e^{j \omega}) &= \frac{1 - \alpha}{2} \; \frac{1 - e^{-j \omega}}{1 + \alpha e^{-j \omega}}
+\begin{aligned}
+	H(z) &= \frac{1 - \alpha}{2} \; \frac{1 - z^{-1}}{1 + \alpha z^{-1}} \\
+	H(e^{j \omega}) &= \frac{1 - \alpha}{2} \; \frac{1 - e^{-j \omega}}{1 + \alpha e^{-j \omega}}
+\end{aligned}
 ```
 Taking $`\alpha = -0.9`$:
 
@@ -203,8 +207,10 @@ Taking $`\alpha = -0.9`$:
 
 
 ```math
-H(z) &= \frac{1 - \alpha}{2} \; \frac{1 - z^{-2}}{1 - \beta (1 + \alpha) z^{-1} + \alpha^2 z^{-2}} \\
-H(e^{j \omega}) &= \frac{1 - \alpha}{2} \; \frac{1 - e^{-j 2 \omega}}{1 - \beta (1 + \alpha) e^{-j \omega} + \alpha^2 e^{-j 2 \omega}} \\
+\begin{aligned}
+	H(z) &= \frac{1 - \alpha}{2} \; \frac{1 - z^{-2}}{1 - \beta (1 + \alpha) z^{-1} + \alpha^2 z^{-2}} \\
+	H(e^{j \omega}) &= \frac{1 - \alpha}{2} \; \frac{1 - e^{-j 2 \omega}}{1 - \beta (1 + \alpha) e^{-j \omega} + \alpha^2 e^{-j 2 \omega}} \\
+\end{aligned}
 ```
 Therefore, zeros and poles are:
 ```math
@@ -223,9 +229,11 @@ For $`\alpha = 0.9`$ and $`\beta = 0.6`$, poles are at $`z = 0.57 \pm 0.69649j`$
 
 
 ```math
-H(z) &= \frac{1 + \alpha}{2} \; \frac{1 - 2 \beta z^{-1} + z^{-2}}{1 - \beta (1 + \alpha) z^{-1} + \alpha^2 z^{-2}} \\
-H(e^{j \omega}) &= \frac{1 + \alpha}{2} \; \frac{1 - 2 \beta e^{-j \omega} + e^{-j 2 \omega}}{1 - \beta (1 + \alpha) e^{-j \omega} + \alpha^2 e^{-j 2 \omega}} \\
-zeros: & \Bigl\{ \beta - \sqrt{\beta^2 - 1},\; β + \sqrt{\beta^2 - 1} \Bigr\} \\
+\begin{aligned}
+	H(z) &= \frac{1 + \alpha}{2} \; \frac{1 - 2 \beta z^{-1} + z^{-2}}{1 - \beta (1 + \alpha) z^{-1} + \alpha^2 z^{-2}} \\
+	H(e^{j \omega}) &= \frac{1 + \alpha}{2} \; \frac{1 - 2 \beta e^{-j \omega} + e^{-j 2 \omega}}{1 - \beta (1 + \alpha) e^{-j \omega} + \alpha^2 e^{-j 2 \omega}} \\
+	zeros: & \Bigl\{ \beta - \sqrt{\beta^2 - 1},\; β + \sqrt{\beta^2 - 1} \Bigr\} \\
+\end{aligned}
 ```
 Therefore, zeros and poles are:
 ```math
@@ -368,8 +376,10 @@ h_1(n) = b_{M/2} + \sum_{k=0}^{M/2} b_k [\delta(n-k) + \delta(n-M+k)]
 ```
 and the frequency response is of the form:
 ```math
-&H_1(e^{j \omega}) & = & e^{-j \frac{M}{2} \omega} \; \Bigl\{ b_{M/2} + \sum_{k=0}^{M/2-1} 2 b_k\;cos\Bigl[ \Bigl( \frac{M}{2}-k \Bigr) \omega \Bigr] \Bigr\} \\
-& & \equiv & e^{-j \frac{M}{2} \omega} \; \Bigl\{ h(M/2) + 2 \sum_{k=1}^{M/2} h\Bigl(\frac{M}{2}-k\Bigr)\;cos(k \omega) \Bigr\}
+\begin{aligned}
+	&H_1(e^{j \omega}) & = & e^{-j \frac{M}{2} \omega} \; \Bigl\{ b_{M/2} + \sum_{k=0}^{M/2-1} 2 b_k\;cos\Bigl[ \Bigl( \frac{M}{2}-k \Bigr) \omega \Bigr] \Bigr\} \\
+	& & \equiv & e^{-j \frac{M}{2} \omega} \; \Bigl\{ h(M/2) + 2 \sum_{k=1}^{M/2} h\Bigl(\frac{M}{2}-k\Bigr)\;cos(k \omega) \Bigr\}
+\end{aligned}
 ```
 
 #### Type 2 Symmetry
