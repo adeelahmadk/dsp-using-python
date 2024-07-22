@@ -173,12 +173,12 @@ Hence, the difference equation for the filter will be:
 - Numerator is same as FIR i.e. zeros at $`\pi`$.
 
 - In addition, it has poles in right-half near near unit circle.
-    ```math
-    \begin{aligned}
-      H(z) &= \frac{1 - \alpha}{2} \; \frac{1 + z^{-1}}{1 - \alpha z^{-1}} \\
-      H(e^{j \omega}) &= \frac{1 - \alpha}{2} \; \frac{1 + e^{-j \omega}}{1 - \alpha e^{-j \omega}}
-    \end{aligned}
-    ```
+```math
+\begin{aligned}
+  H(z) &= \frac{1 - \alpha}{2} \; \frac{1 + z^{-1}}{1 - \alpha z^{-1}} \\
+  H(e^{j \omega}) &= \frac{1 - \alpha}{2} \; \frac{1 + e^{-j \omega}}{1 - \alpha e^{-j \omega}}
+\end{aligned}
+```
 
 Taking $`\alpha = 0.9`$:
 
@@ -323,7 +323,7 @@ We use optimized Park-McLellan algorithm for the FIR filter design having equiri
   \theta(\omega) &= \beta-\alpha\omega \\
 \end{array}
 ```
-    where $`\alpha`$ and $`\beta`$ are fixed values. If first condition is met, the filter has both constant group and phase delay.
+- where $`\alpha`$ and $`\beta`$ are fixed values. If first condition is met, the filter has both constant group and phase delay.
 
 - In order to satisfy this condition, the impulse response must have positive symmetry.
 ```math
