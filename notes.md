@@ -5,11 +5,11 @@
 ## Discrete LTI Systems
 
 A general difference equation represents the response of an LTI system to excitation:
-```
-$$
+
+```math
 y(n) = \sum_{k=0}^{M} b_k.x(n-k) - \sum_{k=1}^{N}a_k.y(n-k)
-$$
 ```
+
 If all terms with coefficients $a_k$ are zero, the system will be FIR, otherwise it’s called IIR. Therefore, FIR is a Feed-Forward system and it has zeros. All its poles lie on zero. Whereas, IIR filter has both poles and zeros.
 
 ### FIR Filters
