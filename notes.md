@@ -174,8 +174,10 @@ Hence, the difference equation for the filter will be:
 
 - In addition, it has poles in right-half near near unit circle.
     ```math
-    H(z) &= \frac{1 - \alpha}{2} \; \frac{1 + z^{-1}}{1 - \alpha z^{-1}} \\
-    H(e^{j \omega}) &= \frac{1 - \alpha}{2} \; \frac{1 + e^{-j \omega}}{1 - \alpha e^{-j \omega}}
+    \begin{aligned}
+      H(z) &= \frac{1 - \alpha}{2} \; \frac{1 + z^{-1}}{1 - \alpha z^{-1}} \\
+      H(e^{j \omega}) &= \frac{1 - \alpha}{2} \; \frac{1 + e^{-j \omega}}{1 - \alpha e^{-j \omega}}
+    \end{aligned}
     ```
 
 Taking $`\alpha = 0.9`$:
@@ -316,22 +318,22 @@ We use optimized Park-McLellan algorithm for the FIR filter design having equiri
 
 - A filter has a linear phase response if one of the following relationships are satisfied:
     ```math
-    \begin{array}{l}
-      \theta(\omega) = -\alpha\omega \\
-      \theta(\omega) = \beta-\alpha\omega \\
+    \begin{array}{rl}
+      \theta(\omega) &= -\alpha\omega \\
+      \theta(\omega) &= \beta-\alpha\omega \\
     \end{array}
     ```
     where $`\alpha`$ and $`\beta`$ are fixed values. If first condition is met, the filter has both constant group and phase delay.
 
 - In order to satisfy this condition, the impulse response must have positive symmetry.
     ```math
-    \begin{array}{l}
-      h(n) = h(N-n-1) \\
-      \begin{cases}
+    \begin{array}{rl}
+      h(n) &= h(N-n-1) \\
+      &\begin{cases}
       	n = 0,1,...,(N-1)/2 &, odd \; N \\
       	n = 0,1,...,(N/2-1) &, even \; N
       \end{cases} \\
-      \alpha = (N-1)/2
+      \alpha &= (N-1)/2
     \end{array}
     ```
     
