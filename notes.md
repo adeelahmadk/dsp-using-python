@@ -29,16 +29,16 @@ A first degree FIR LPF can be designed as:
   & H(z) &= 0.5(1 + z^{-1}) \\
 \end{array}
 ```
-![](/home/adeel/workspace/learn/dsp/fig/fir_lpf1.png)
+![](./fig/fir_lpf1.png)
 
-![fir_lpf1_pzplot](/home/adeel/workspace/learn/dsp/fig/fir_lpf1_pzplot.png)
+![fir_lpf1_pzplot](./fig/fir_lpf1_pzplot.png)
 
 
 
 For 2nd degree FIR:
 ```math
 \begin{array}{ll}
-  & H(z) &= 0.5(1 + z^{-1}) \; \cross \; 0.5(1 + z^{-1}) \\
+  & H(z) &= 0.5(1 + z^{-1}) \; \times \; 0.5(1 + z^{-1}) \\
   & &= 0.25(1 + 2z^{-1} + z^{-2})
 \end{array}
 ```
@@ -553,22 +553,23 @@ h_D(n) =
 - Considering that $`h(n)`$ is symmetric, we only need values for $`h(0),h(1),...,h(15)`$
     ```math
     \begin{array}{rlll}
-    	n = 0: & h_D(0) &= 2f_{c_n} &= 2 \cross 0.3 = 0.6 \\
+    	n = 0: & h_D(0) &= 2f_{c_n} &= 2 \times 0.3 = 0.6 \\
     				 & w(0) &= 0.5+0.5cos(0) &= 1 \\
     				 & h(0) &= h_D(0)w(0) &= 0.6 \\
-      n = 1: & h_D(1) &= 2 \cross 0.3\frac{sin \bigl( 2\pi \cross 0.3 \bigr)}{2\pi \cross 0.3} &= 0.3027 \\
+      n = 1: & h_D(1) &= 2 \times 0.3\frac{sin \bigl( 2\pi \times 0.3 \bigr)}{2\pi \times 0.3} &= 0.3027 \\
       			 & w(1) &= 0.5+0.5cos(2 \pi / 31) &= 0.9898 \\
     				 & h(1) &= h(-1) = h_D(1)w(1) &= 0.2996 \\
-      n = 2: & h_D(2) &= 2 \cross 0.3\frac{sin \bigl( 2 \cross 2\pi \cross 0.3 \bigr)}{2 \cross 2\pi \cross 0.3} &= -0.0935 \\
-      			 & w(2) &= 0.5+0.5cos(2 \pi \cross 2/ 31) &= 0.9595 \\
+      n = 2: & h_D(2) &= 2 \times 0.3\frac{sin \bigl( 2 \times 2\pi \times 0.3 \bigr)}{2 \times 2\pi \times 0.3} &= -0.0935 \\
+      			 & w(2) &= 0.5+0.5cos(2 \pi \times 2/ 31) &= 0.9595 \\
     				 & h(2) &= h(-2) = h_D(2)w(2) &= -0.0898 \\
     	\vdots & & & \\
-      n = 15: & h_D(15) &= 2 \cross 0.3\frac{sin \bigl( 15 \cross 2\pi \cross 0.3 \bigr)}{15 \cross 2\pi \cross 0.3} &\approx 0 \\
-      			 & w(15) &= 0.5+0.5cos(2 \pi \cross 15/ 31) &= 0.0026 \\
+      n = 15: & h_D(15) &= 2 \times 0.3\frac{sin \bigl( 15 \times 2\pi \times 0.3 \bigr)}{15 \times 2\pi \times 0.3} &\approx 0 \\
+      			 & w(15) &= 0.5+0.5cos(2 \pi \times 15/ 31) &= 0.0026 \\
     				 & h(15) &= h(-15) = h_D(15)w(15) &\approx 0 \\
     \end{array}
     ```
     
+
 ![LPF Frequency Response Plot](./fig/windowed_fir_lpf1.png)
 
 
