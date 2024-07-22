@@ -185,6 +185,8 @@ plt.savefig('fig/ecg_mit100.png', dpi=300)
 
 ## References
 
+1. [Numpy API Reference](https://numpy.org/doc/stable/reference/index.html)
+1. [Matplotlib API Reference](https://matplotlib.org/stable/api/index.html)
 1. [Python audio signal processing with librosa](https://daehnhardt.com/blog/2023/03/05/python-audio-signal-processing-with-librosa/)
 2. [Signal processing for sound file](https://math.umd.edu/~petersd/464/soundstretch.html)
 3. [Zheng et. al., A 12-lead electrocardiogram database for arrhythmia research covering more than 10,000 patients](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7016169/)
