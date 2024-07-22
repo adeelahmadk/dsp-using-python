@@ -1,4 +1,4 @@
-# Code Pattern Specifications
+# Programming Pattern Specifications
 
 ## Formats and Computations
 

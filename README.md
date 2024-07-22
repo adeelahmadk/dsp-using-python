@@ -33,6 +33,15 @@ This repository is intended to be an introduction to digital signal processing c
 
 
 
+### Documentation
+
+Some useful documentation on core concepts and programming patterns is also included in markdown docs:
+
+-  [DSP Notes](notes.md)
+- [Program Pattern Specs](code-specs.md)
+
+
+
 ### Directories
 
 All source code files are located in the project root. Moreover, there are other directories that serve different purposes:
