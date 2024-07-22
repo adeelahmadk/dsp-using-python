@@ -317,36 +317,34 @@ We use optimized Park-McLellan algorithm for the FIR filter design having equiri
 - It's undesirable in applications like music, data transmission, video, and biomedical science. Hence, linear phase filters are used for such signals.
 
 - A filter has a linear phase response if one of the following relationships are satisfied:
-    ```math
-    \begin{array}{rl}
-      \theta(\omega) &= -\alpha\omega \\
-      \theta(\omega) &= \beta-\alpha\omega \\
-    \end{array}
-    ```
+```math
+\begin{array}{rl}
+  \theta(\omega) &= -\alpha\omega \\
+  \theta(\omega) &= \beta-\alpha\omega \\
+\end{array}
+```
     where $`\alpha`$ and $`\beta`$ are fixed values. If first condition is met, the filter has both constant group and phase delay.
 
 - In order to satisfy this condition, the impulse response must have positive symmetry.
-    ```math
-    \begin{array}{rl}
-      h(n) &= h(N-n-1) \\
-      &\begin{cases}
-      	n = 0,1,...,(N-1)/2 &, odd \; N \\
-      	n = 0,1,...,(N/2-1) &, even \; N
-      \end{cases} \\
-      \alpha &= (N-1)/2
-    \end{array}
-    ```
+```math
+\begin{array}{rl}
+  h(n) &= h(N-n-1) \\
+  &\begin{cases}
+  	n = 0,1,...,(N-1)/2 &, odd \; N \\
+  	n = 0,1,...,(N/2-1) &, even \; N
+  \end{cases} \\
+  \alpha &= (N-1)/2
+\end{array}
+```
     
 - If only the second equation is satisfied, the filter will have only one fix group delay and the impulse response of the filter will have negative symmetry:
-    ```math
-    \begin{array}{rl}
-      h(n) &= -h(N-n-1) \\
-      \alpha &= (N-1)/2 \\
-      \beta &= \pi/2
-    \end{array}
-    ```
-
-
+```math
+\begin{array}{rl}
+  h(n) &= -h(N-n-1) \\
+  \alpha &= (N-1)/2 \\
+  \beta &= \pi/2
+\end{array}
+```
 
 #### Types of Symmetry
 
@@ -497,12 +495,12 @@ For third type FIR: $`H_3(e^{j0}) = 0`$.
 - As a result, we have to truncate the response samples, which is effectively multiplying the frequency response by a window function of length $`N`$.
 
 - The effect of time-domain multiplication is the convolution of the frequency response with the Fourier transform of the window function.
-    ```math
-    \begin{aligned}
-    h_p(n) &= h_d(n).w(n) \\
-    H_p(\omega) &= \frac{1}{2 \pi} \; \int_{-\pi}^{\pi} H_d(e^{j \theta}) W(e^{j (\omega - \theta)}) \; d \theta
-    \end{aligned}
-    ```
+```math
+\begin{aligned}
+h_p(n) &= h_d(n).w(n) \\
+H_p(\omega) &= \frac{1}{2 \pi} \; \int_{-\pi}^{\pi} H_d(e^{j \theta}) W(e^{j (\omega - \theta)}) \; d \theta
+\end{aligned}
+```
 
 - Window function is a compromise between the width of the main lobe and the levels of the sidelobes.
 
@@ -543,43 +541,43 @@ h_D(n) =
 - Transition region relative to sampling frequency: $`\Delta f_n = \frac{\Delta f}{F_s} = \frac{800}{8000} = 0.1`$
 
 - Selecting Hanning window on the basis of stopband attenuation and minimum filter order:
-    ```math
-    \frac{3.1}{N} = \Delta f_n = 0.1 \Rightarrow N = \frac{3.1}{0.1} = 31
-    ```
+```math
+\frac{3.1}{N} = \Delta f_n = 0.1 \Rightarrow N = \frac{3.1}{0.1} = 31
+```
 
 - 
 
 - The order of the filter is $`N = 31`$, the coefficients are obtained as:
-    ```math
-    \begin{aligned}
-    h(n) &= h_D(n)w(n) &, -15 \le n \le 15 \\
-    w(n) &= 0.5 + 0.5\;cos\bigl(2 \pi n / 31 \bigr) &, -15 \le n \le 15
-    \end{aligned}
-    ```
+```math
+\begin{aligned}
+h(n) &= h_D(n)w(n) &, -15 \le n \le 15 \\
+w(n) &= 0.5 + 0.5\;cos\bigl(2 \pi n / 31 \bigr) &, -15 \le n \le 15
+\end{aligned}
+```
 
 - The shift in cutoff frequency, due to the window's smearing effect, must be compensated by moving it to the middle of the transition region:
-    ```math
-    f_{c_n} = \frac{f_p + \frac{\Delta f}{2}}{F_s} = \frac{(2+0.4)\;kHz}{8\;kHz} = 0.3
-    ```
+```math
+f_{c_n} = \frac{f_p + \frac{\Delta f}{2}}{F_s} = \frac{(2+0.4)\;kHz}{8\;kHz} = 0.3
+```
 
 - Considering that $`h(n)`$ is symmetric, we only need values for $`h(0),h(1),...,h(15)`$
-    ```math
-    \begin{array}{rlll}
-    	n = 0: & h_D(0) &= 2f_{c_n} &= 2 \times 0.3 = 0.6 \\
-    				 & w(0) &= 0.5+0.5cos(0) &= 1 \\
-    				 & h(0) &= h_D(0)w(0) &= 0.6 \\
-      n = 1: & h_D(1) &= 2 \times 0.3\frac{sin \bigl( 2\pi \times 0.3 \bigr)}{2\pi \times 0.3} &= 0.3027 \\
-      			 & w(1) &= 0.5+0.5cos(2 \pi / 31) &= 0.9898 \\
-    				 & h(1) &= h(-1) = h_D(1)w(1) &= 0.2996 \\
-      n = 2: & h_D(2) &= 2 \times 0.3\frac{sin \bigl( 2 \times 2\pi \times 0.3 \bigr)}{2 \times 2\pi \times 0.3} &= -0.0935 \\
-      			 & w(2) &= 0.5+0.5cos(2 \pi \times 2/ 31) &= 0.9595 \\
-    				 & h(2) &= h(-2) = h_D(2)w(2) &= -0.0898 \\
-    	\vdots & & & \\
-      n = 15: & h_D(15) &= 2 \times 0.3\frac{sin \bigl( 15 \times 2\pi \times 0.3 \bigr)}{15 \times 2\pi \times 0.3} &\approx 0 \\
-      			 & w(15) &= 0.5+0.5cos(2 \pi \times 15/ 31) &= 0.0026 \\
-    				 & h(15) &= h(-15) = h_D(15)w(15) &\approx 0 \\
-    \end{array}
-    ```
+```math
+\begin{array}{rlll}
+	n = 0: & h_D(0) &= 2f_{c_n} &= 2 \times 0.3 = 0.6 \\
+				 & w(0) &= 0.5+0.5cos(0) &= 1 \\
+				 & h(0) &= h_D(0)w(0) &= 0.6 \\
+  n = 1: & h_D(1) &= 2 \times 0.3\frac{sin \bigl( 2\pi \times 0.3 \bigr)}{2\pi \times 0.3} &= 0.3027 \\
+  			 & w(1) &= 0.5+0.5cos(2 \pi / 31) &= 0.9898 \\
+				 & h(1) &= h(-1) = h_D(1)w(1) &= 0.2996 \\
+  n = 2: & h_D(2) &= 2 \times 0.3\frac{sin \bigl( 2 \times 2\pi \times 0.3 \bigr)}{2 \times 2\pi \times 0.3} &= -0.0935 \\
+  			 & w(2) &= 0.5+0.5cos(2 \pi \times 2/ 31) &= 0.9595 \\
+				 & h(2) &= h(-2) = h_D(2)w(2) &= -0.0898 \\
+	\vdots & & & \\
+  n = 15: & h_D(15) &= 2 \times 0.3\frac{sin \bigl( 15 \times 2\pi \times 0.3 \bigr)}{15 \times 2\pi \times 0.3} &\approx 0 \\
+  			 & w(15) &= 0.5+0.5cos(2 \pi \times 15/ 31) &= 0.0026 \\
+				 & h(15) &= h(-15) = h_D(15)w(15) &\approx 0 \\
+\end{array}
+```
     
 
 ![LPF Frequency Response Plot](./fig/windowed_fir_lpf1.png)
