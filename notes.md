@@ -336,7 +336,7 @@ We use optimized Park-McLellan algorithm for the FIR filter design having equiri
   \alpha &= (N-1)/2
 \end{array}
 ```
-    
+
 - If only the second equation is satisfied, the filter will have only one fix group delay and the impulse response of the filter will have negative symmetry:
 ```math
 \begin{array}{rl}
@@ -514,20 +514,22 @@ H_p(\omega) &= \frac{1}{2 \pi} \; \int_{-\pi}^{\pi} H_d(e^{j \theta}) W(e^{j (\o
 
 
 
-#### Design Steps
+##### Design Steps
 
 - Choose a window function that produces the desired attenuation in the stopband as well as the passband ripple.
 - Calculate the approximate number of coefficients $`N`$ from the width of the desired transition region.
 - Compute $`N`$ sample values of the window function.
-- Find the impulse response of the of the ideal filter with cutoff frequecy centered in the transition region.
+- Find the impulse response of the of the ideal filter with cutoff frequency centered in the transition region.
 - Multiply the window and impulse response of the filter to get the filter coefficients.
 - Calculate the frequency response of the filter to cross-check with the desired specifications.
 
-#### Example Windowed LPF
+
+
+##### Example Windowed LPF
 
 - passband edge frequency: $`f_p = 2 \; kHz`$
 - transition region: $`\Delta f = 800 \; Hz`$
-- stopband attenuation: $`A_s > 40 \; dB`$
+- stop-band attenuation: $`A_s > 40 \; dB`$
 - sampling frequency: $`F_s = 8 \; kHz`$
 
 ```math
@@ -540,14 +542,13 @@ h_D(n) =
 
 - Transition region relative to sampling frequency: $`\Delta f_n = \frac{\Delta f}{F_s} = \frac{800}{8000} = 0.1`$
 
-- Selecting Hanning window on the basis of stopband attenuation and minimum filter order:
+- Selecting **Hanning window** on the basis of stop-band attenuation and minimum filter order:
 ```math
 \frac{3.1}{N} = \Delta f_n = 0.1 \Rightarrow N = \frac{3.1}{0.1} = 31
 ```
 
-- 
-
 - The order of the filter is $`N = 31`$, the coefficients are obtained as:
+
 ```math
 \begin{aligned}
 h(n) &= h_D(n)w(n) &, -15 \le n \le 15 \\
@@ -578,9 +579,258 @@ f_{c_n} = \frac{f_p + \frac{\Delta f}{2}}{F_s} = \frac{(2+0.4)\;kHz}{8\;kHz} = 0
 				 & h(15) &= h(-15) = h_D(15)w(15) &\approx 0 \\
 \end{array}
 ```
-    
+
 
 ![LPF Frequency Response Plot](./fig/windowed_fir_lpf1.png)
+
+
+
+##### Example Windowed HPF
+
+- passband edge frequency: $`f_p = 2 \; kHz`$
+- transition region: $`\Delta f = 800 \; Hz`$
+- stop-band attenuation: $`A_s > 40 \; dB`$
+- sampling frequency:  $`F_s = 8 \; kHz`$
+- Selecting **Hanning window** on the basis of stop-band attenuation
+
+
+
+![HPF Frequency Response Plot](./fig/windowed_fir_hpf1.png)
+
+
+
+##### Example Windowed BPF
+
+- passband edge frequencies: $`f_{p1} = 2 \; kHz`$, $`f_{p2} = 3 \; kHz`$
+- transition region: $`\Delta f = 800 \; Hz`$
+- stop-band attenuation: $`A_s > 40 \; dB`$
+- sampling frequency:  $`F_s = 8 \; kHz`$
+- Selecting **Hanning window** on the basis of stop-band attenuation
+
+![](./fig/windowed_fir_bpf1.png)
+
+
+
+##### Example Windowed BSF
+
+- stop-band edge frequencies: $`f_{s1} = 2 \; kHz`$, $`f_{s2} = 3 \; kHz`$
+- transition region: $`\Delta f = 800 \; Hz`$
+- stop-band attenuation: $`A_s > 40 \; dB`$
+- sampling frequency:  $`F_s = 8 \; kHz`$
+- Selecting **Hanning window** on the basis of stop-band attenuation
+
+![](./fig/windowed_fir_bsf1.png)
+
+
+
+##### Wish List
+
+- Try other window functions
+- Explore Bartlett window
+- Try higher degree filters and compare the results
+- Try both even and odd degrees
+- Plot the shapes of all windows
+
+##### Advantages and Disadvantages
+
+- Most important advantage is its simplicity
+- Disadvantages
+    - Biggest is the lack of flexibility. 
+    - Passband and stop-band ripples are almost equal. 
+    - The designer may end up with either too little passband ripple or too much stop-band attenuation.
+    - Due to the effect of convolution, the exact passband and stop-band edge frequencies can't be determined
+    - Both passband and stop-band ripples have their greatest values near the passband edges, which is not an optimal response.
+
+
+
+####  Criteria of Optimality
+
+- Most widely used method is to use computer programs to optimize the impulse response or $`b_k, \; k = 0:N-1`$
+
+- For a filter with a limited response
+
+```math
+y(n) = \sum_{k=0}^{M} b_k.x(n-k)
+```
+
+- This design method is based on *minimizing equal deviation error from ripples*, known as **equi-ripple design**.
+- An optimal filter is one in which, according to the Chebyshev approximation theory, the approximation error has at least $`\frac{N+1}{2} + 1`$ change of sign with the same amplitude on the desired ranges. Therefore, such filters are also called equi-ripple.
+- The optimal method tries to minimize the maximum error. Another name for this method is the **minimax design**.
+- Its purpose is to change the coefficients of the impulse response (FIR filter) so that an optimal approximation of the desired frequency response is obtained.
+- Non-linear methods can also be employed. However, the goal here is to use linear techniques, although they may be slower to run compared to non-linear methods. The critical frequencies of the desired response can be precisely determined.
+- Filter characteristics:
+    - Amplitude deviation in passband: $`\pm\delta_p`$
+    - Amplitude deviation in stop-band: $`\pm\delta_s`$
+    - Passband edge frequency: $`f_p`$
+    - Stop-band edge frequency: $`f_s`$
+- Considering four types of symmetry in the FIR filter:
+- First type of symmetry ($`N=M+1,\;M=2L`$):
+
+```math
+\begin{aligned}
+	&H_1(e^{j \omega}) & = & \; e^{-j \frac{M}{2} \omega} \; H_R(\omega) \\
+	&H_R(\omega) & = & \; b_{L} + 2 \sum_{k=0}^{L-1} b_k\;cos\Bigl[ \Bigl( L - k \Bigr) \omega \Bigr] \\
+\end{aligned}
+```
+
+- For symmetry of second type ($`N=M+1,\;M=2L+1`$):
+
+```math
+\begin{aligned}
+	&H_2(e^{j \omega}) & = & \; e^{-j \frac{M}{2} \omega} \; H_R(\omega) \\
+	&H_R(\omega) & = & \; \Bigl\{ b_{L} + 2 \sum_{k=0}^{L} b_k\;cos\Bigl[ \Bigl( \frac{M}{2} - k \Bigr) \omega \Bigr] \\
+\end{aligned}
+```
+
+- For symmetry of third type ($`N=M+1,\;M=2L`$):
+
+```math
+\begin{aligned}
+	&H_3(e^{j \omega}) & = & \; e^{-j \frac{M}{2} \omega} \times\; j H_R(\omega) \\
+	&H_R(\omega) & = & \; 2 \sum_{k=0}^{L-1} b_k\;sin\Bigl[ \Bigl( L - k \Bigr) \omega \Bigr] \\
+\end{aligned}
+```
+
+- For symmetry of fourth type ($`N=M+1,\;M=2L+1`$):
+
+```math
+\begin{aligned}
+	&H_4(e^{j \omega}) & = & \; e^{-j \frac{M}{2} \omega} \times\; j H_R(\omega) \\
+	&H_R(\omega) & = & \; 2 \sum_{k=0}^{L} b_k\;sin\Bigl[ \Bigl( \frac{M}{2} - k \Bigr) \omega \Bigr] \\
+\end{aligned}
+```
+
+- The weighted error function is defined as follows:
+
+```math
+E (e^{j \omega}) = W (e^{j \omega}) \Bigl[ H_R (e^{j \omega}) - H_d (e^{j \omega}) \Bigl]
+```
+
+- where the desired frequency response is represented by $`H_d(e^{j \omega})`$ and the weighting function is shown by $`W(e^{j \omega})`$.
+
+- The weighting function is chosen by the designer and indicates the relative range of error at different distances.
+- The sample form of the desired frequency response is:
+
+```math
+\begin{aligned}
+	H_d(e^{j \omega}) = 
+	\begin{cases}
+    \; 1 \pm \delta_p & \text{for passband} \\
+    \; 0 + \delta_s & \text{for stopband}
+	\end{cases}
+\end{aligned}
+```
+
+- The weighting function can be in the following form:
+
+```math
+\begin{aligned}
+	W(e^{j \omega}) = 
+	\begin{cases}
+    \; 1 & \text{for passband} \\
+    \; 0 & \text{for transition region} \\
+    \; \frac{\delta_p}{\delta_s}  & \text{for stopband}
+	\end{cases}
+\end{aligned}
+```
+
+- or
+
+```math
+\begin{aligned}
+	W(e^{j \omega}) = 
+	\begin{cases}
+    \; \frac{\delta_s}{\delta_p} & \text{for passband} \\
+    \; 0 & \text{for transition region} \\
+    \; 1  & \text{for stopband}
+	\end{cases}
+\end{aligned}
+```
+
+- The coefficients of $`b(k)`$ are unknown variables that must be found so that the maximum absolute value of the error, $`|E(w)|`$ be minimized in $`0 \le \omega \le \pi`$
+
+- If the answers are found, the frequency response will have equi-ripple behavior.
+- Two researchers named Parks and McClellan were the first to solve the above problem using an algorithm called Remez exchange. The corresponding algorithm is explained below:
+- A filter with a linear phase that minimizes the maximum weighted Chebyshev error is defined as:
+
+```math
+\Vert E (\omega) \Vert_{\infty} = max \Bigg\vert W (\omega) \Bigl[ H_R (\omega) - H_d (\omega) \Bigl] \Bigg\vert, \;\omega \in [0, \pi]
+```
+
+- where
+
+```math
+\begin{aligned}
+	H_d(\omega) &= 
+	\begin{cases}
+    \; 1 & 0 \lt \omega \lt \omega_c \\
+    \; 0 & \omega_c \lt \omega \lt \pi \\
+	\end{cases} \\
+
+	W(\omega) &= 
+	\begin{cases}
+    \; K_p  & 0 \le \omega \le \omega_p \\
+    \; 0 		& \omega_p \lt \omega \lt \omega_s \\
+    \; K_s  & \omega_s \le \omega \le \pi
+	\end{cases}
+\end{aligned}
+```
+
+- Assuming that
+
+```math
+\begin{aligned}
+	& 0 \lt \omega_p \lt \omega_c \lt \omega_s \lt \pi \\
+	& \omega_c = \frac{\omega_p + \omega_s}{2} \\
+	& \frac{\delta_p}{\delta_s} = \frac{K_s}{K_p}
+\end{aligned}
+```
+
+- The periodicity theorem states that $`|E(w)|`$ reaches its maximum value at least at $`R=S+2`$ Also the weighted error function has a change of sign at least at the same $`R=S+2`$ points.
+- The maximum and minimum points in the number of $`R`$ appear as $`w_1,...,w_R`$ in ascending order. Meanwhile:
+
+```math
+E (\omega_i) = c(-1)^i \; \Big\Vert E (\omega) \Big\Vert_{\infty} \; , \; i = 1,...,R
+```
+
+- where $`c`$ is equal to $`+1`$ or $`-1`$
+- The following equation can be used to approximate the filter degree:
+
+```math
+N \approx \frac{-10 log_{10}(\delta_p \delta_s) - 13}{14.6 \Delta f} + 1, \; \Delta f = \frac{\omega_s - \omega_p}{2 \pi}
+```
+
+
+
+####  Filter Design using Optimization Method
+
+- The McClellan FIR algorithm tries to equalize and minimize the ripples for a given frequency profile and assumed filter degree.
+- If the degree of the filter is small, the program may not be able to find an equi-ripple solution.
+- On the other hand, if the given filter degree is too large, the result will be a filter with uniform ripples that will exceed the specified requirements.
+
+##### Design Steps
+
+- The design steps are:
+    1. The first step includes determining the frequency ranges, the average level of gain (usually with linear units) for each frequency range and the relative weighting of the ripple sizes for each of the frequency ranges. The last characteristic allows filters to be designed with different sizes of ripple in different frequency ranges.
+    1. The second step is to estimate the filter degree. Simple equations are available that provide a first estimate of the degree required for the filter. It can be changed in successive iterations to find the minimum required degree.
+    1. Then an optimization program is executed to calculate the filter. The `remezord` command is used for the first two steps above, and the `remez` function is used to design the filter (coefficients).
+    1. It is necessary to check the result (usually by plotting the domain response) to ensure that the program has found an equi-ripple solution to satisfy the requirements. The `freqz` command is used for this purpose.
+    1. If the design requirements are not estimated (for example, there is no solution with the same wave amplitude), the value of the estimated degree of the filter should be slightly increased and the `remez` command should be executed with the new degree of the filter and the result should be checked again.
+    1. This repetitive procedure continues until an acceptable result is obtained.
+- [remezord function in Python (according to Scipy Ticket #475)](https://github.com/thorstenkranz/eegpy/blob/master/eegpy/filter/remezord.py)
+
+##### Example LPF using Remez Exchange
+
+- passband edge frequency: $`f_p = 2 \; kHz`$
+- transition region: $`\Delta f = 800 \; Hz`$
+- passband attenuation: $`A_p \lt 0.1 \; dB`$
+- stop-band attenuation: $`A_s \gt 40 \; dB`$
+- sampling frequency: $`F_s = 8 \; kHz`$
+
+```math
+
+```
+
 
 
 ## References

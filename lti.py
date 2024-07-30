@@ -93,12 +93,34 @@ def find_hpf_cutoff(f: np.array, H1_abs: np.array) -> np.float64:
     """
     MaxAmp = np.max(H1_abs)
     TargetAmp = 1 / np.sqrt(2) * MaxAmp
-    cnt = 0
-    while H1_abs[cnt] < TargetAmp:
-        cnt += 1
+    cnt = H1_abs.argmax()
+    fc = 0
+    #cnt = 0
+    while H1_abs[cnt] > TargetAmp:
+        if cnt <= 0:
+            return fc
+        cnt -= 1
 
     fc = f[cnt - 1]
     return fc
+
+
+def find_hpf_stopband(f: np.array, H1_abs: np.array, As: float) -> np.float64:
+    """
+    Returns stopband edge frequency of an LPF
+    """
+    delta_s = 10**(-As/20)
+    MaxAmp = np.max(H1_abs)
+    TargetAmp = delta_s
+    fs = 0
+    cnt = H1_abs.argmax()
+    while H1_abs[cnt] > TargetAmp:
+        if cnt <= 0:
+            return fs
+        cnt -= 1
+    
+    fs = f[cnt - 1]
+    return fs
 
 
 def find_bpf_cutoff(f: np.array, H1_abs: np.array) -> tuple[np.float64, np.float64]:
@@ -107,43 +129,109 @@ def find_bpf_cutoff(f: np.array, H1_abs: np.array) -> tuple[np.float64, np.float
     """
     MaxAmp = np.max(H1_abs)
     TargetAmp = 1 / np.sqrt(2) * MaxAmp
+    MaxIdx = H1_abs.argmax()
+    fc1, fc2 = 0, 0
     
-    cnt = np.argmax(H1_abs)
+    cnt = MaxIdx
     while H1_abs[cnt] > TargetAmp:
+        if cnt <= 0:
+            return fc1, fc2
         cnt -= 1
 
     fc1 = f[cnt - 1]
 
-    cnt = np.argmax(H1_abs)
+    cnt = MaxIdx
     while H1_abs[cnt] > TargetAmp:
+        if cnt >= len(H1_abs) - 1:
+            return fc1, fc2
         cnt += 1
 
     fc2 = f[cnt - 1]
 
     return fc1, fc2
+
+
+def find_bpf_stopband(f: np.array, H1_abs: np.array, As: float) -> np.float64:
+    """
+    Returns stopband edge frequency of an BPF
+    """
+    delta_s = 10**(-As/20)
+    MaxAmp = np.max(H1_abs)
+    TargetAmp = delta_s
+    fs1, fs2 = 0, 0
+    MaxIdx = H1_abs.argmax()
+    cnt = MaxIdx
+    while H1_abs[cnt] > TargetAmp:
+        if cnt <= 0:
+            return fs1, fs2
+        cnt -= 1
+    
+    fs1 = f[cnt - 1]
+
+    cnt = MaxIdx
+    while H1_abs[cnt] > TargetAmp:
+        if cnt >= len(H1_abs) - 1:
+            return fs1, fs2
+        cnt += 1
+    
+    fs2 = f[cnt - 1]
+
+    return fs1, fs2
 
 
 def find_bsf_cutoff(f: np.array, H1_abs: np.array) -> tuple[np.float64, np.float64]:
     """
-    Returns cut-off frequency of a BPF
+    Returns cut-off frequency of a BSF
     """
     MaxAmp = np.max(H1_abs)
     TargetAmp = 1 / np.sqrt(2) * MaxAmp
-    
-    #cnt = np.argmin(H1_abs)
+    fc1, fc2 = 0, 0
+        
     cnt = 0
     while H1_abs[cnt] > TargetAmp:
+        if cnt >= len(H1_abs) - 1:
+            return fc1, fc2
         cnt += 1
 
     fc1 = f[cnt - 1]
 
-    #cnt = np.argmin(H1_abs)
-    while H1_abs[cnt] < TargetAmp:
-        cnt += 1
+    cnt = len(H1_abs) - 1
+    while H1_abs[cnt] > TargetAmp:
+        if cnt <= 0:
+            return fc1, fc2
+        cnt -= 1
 
     fc2 = f[cnt - 1]
 
     return fc1, fc2
+
+
+def find_bsf_stopband(f: np.array, H1_abs: np.array, As: float) -> np.float64:
+    """
+    Returns stopband edge frequency of an BSF
+    """
+    delta_s = 10**(-As/20)
+    MaxAmp = np.max(H1_abs)
+    TargetAmp = delta_s
+    fs1, fs2 = 0, 0
+    
+    cnt = 0
+    while H1_abs[cnt] > TargetAmp:
+        if cnt >= len(H1_abs) - 1:
+            return fs1, fs2
+        cnt += 1
+    
+    fs1 = f[cnt - 1]
+
+    cnt = len(H1_abs) - 1
+    while H1_abs[cnt] > TargetAmp:
+        if cnt <= 0:
+            return fs1, fs2
+        cnt -= 1
+    
+    fs2 = f[cnt - 1]
+
+    return fs1, fs2
 
 
 def pz_plot(num: np.array, den: np.array, title: str='Pole-Zero Plot', show: bool=False, save_file: str=None) -> None:
